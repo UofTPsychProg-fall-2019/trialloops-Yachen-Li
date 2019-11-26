@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Build a trial loop Step 1
-Use this template script to present one trial with your desired structure
-@author: katherineduncan
-"""
 #%% Required set up 
 # this imports everything you might need and opens a full screen window
 # when you are developing your script you might want to make a smaller window 
@@ -15,30 +8,48 @@ import os, sys
 from psychopy import visual, core, event, gui, logging
 
 # open a white full screen window
-win = visual.Window(fullscr=True, allowGUI=False, color='white', unit='height') 
-
-# uncomment if you use a clock. Optional because we didn't cover timing this week, 
-# but you can find examples in the tutorial code 
-#trialClock = core.Clock()
-
-#%% up to you!
-# this is where you build a trial that you might actually use one day!
-# just try to make one trial ordering your lines of code according to the 
-# sequence of events that happen on one trial
-# if you're stuck you can use the responseExercise.py answer as a starting point 
-
-# maybe start by making stimulus objects (e.g. myPic = visual.ImageStim(...))  
-
-# then draw all stimuli
-
-# then flip your window
-
-# then record your responses
+win = visual.Window(fullscr=True, allowGUI=False, color = 'white', unit='height') 
+trialClock = core.Clock()
 
 
-#%% Required clean up
-# this cell will make sure that your window displays for a while and then 
-# closes properly
+instruct = visual.TextStim(win, color = 'black', height = .05, text="Verify the number of dots either from your perspective or from his perspective. Press Q if the number matches the number of dots, press P if the number does not match. Please respond as fast as you can. Press any key to proceed with the task")
+instruct.draw()
+win.flip()
 
+if 'escape' in event.waitKeys():
+    core.quit()
+
+fixation = visual.TextStim(win, text='+', color = 'black', height=.05) 
+fixation.draw()
+win.flip()
+core.wait(0.75)
+
+perspect = visual.TextStim(win, text= 'You', color = 'black', height = .05)
+perspect.draw()
+win.flip()
+core.wait(0.75)
+
+dots = visual.TextStim(win, text= '1', color = 'black', height = .05)
+dots.draw()
+win.flip()
+core.wait(0.75)
+
+myimage = 'Perspective/1consist.jpg'
+
+mypic = visual.ImageStim(win,image= myimage, pos = (0,0),size=1,interpolate=True)
+mypic.draw()
+win.flip()
 core.wait(2)
+
+
+keys = event.waitKeys(maxWait = 2, keylist = ('Q','P'))
+print(keys)
+
+if keys==None:
+    keys=[]
+    keys.append("no key")
+    
+
 win.close()
+core.quit()
+
